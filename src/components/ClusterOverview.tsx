@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getClusterHealth } from '../services/elasticsearch';
 import EarWig from '../loader/earwig';
+
 const ClusterOverview = () => {
   const [health, setHealth] = useState<any>(null);
   const [loading, setLoading] = useState(true);
