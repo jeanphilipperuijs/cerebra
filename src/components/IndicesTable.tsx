@@ -20,14 +20,14 @@ const IndicesTable = () => {
   return (
         <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
       <details open={open} onToggle={() => setOpen(e.currentTarget.open)}>
-        <summary>
+        <summary className="flex items-center justify-between">
           <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Indices</h2>
         </summary>
 
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm text-left border">
             <thead>
-              <tr className="bg-gray-100">
+              <tr className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
                 {Object.keys(indices[0] || {}).map((key) => (
                   <th key={key} className="p-2 border">{key}</th>
                 ))}

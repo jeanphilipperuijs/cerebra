@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { getConfig } from './config';
 
 const ELASTIC_BASE_URL = 'https://es.ruijs.fr'; // Replace with your ES URL
+//const ELASTIC_BASE_URL = getConfig().ELASTIC_BASE_URL || 'https://es.ruijs.fr';
 
 export const getClusterHealth = async () => {
     const response = await axios.get(`${ELASTIC_BASE_URL}/_cluster/health`);
@@ -21,6 +23,11 @@ export const getShards = async () => {
     const response = await axios.get(`${ELASTIC_BASE_URL}/_cat/shards?format=json`);
     return response.data;
 };
+
+export const getTasks = async () => {
+    const response = await axios.get(`${ELASTIC_BASE_URL}/_tasks`)
+    return response.data;
+}
 
 export const reRoute = async (
     index: string,

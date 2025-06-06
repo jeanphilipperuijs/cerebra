@@ -43,7 +43,7 @@ const ShardViewer = () => {
     return (
         <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
             <details open={open} onToggle={() => setOpen(e.currentTarget.open)}>
-                <summary>
+                <summary className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Shard Viewer</h2>
                 </summary>
                 <div className="overflow-x-auto">

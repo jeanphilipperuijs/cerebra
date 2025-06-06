@@ -1,5 +1,6 @@
 import React from 'react';
 import ClusterOverview from '../components/ClusterOverview';
+import TasksTable from '../components/TasksTable';
 import NodesTable from '../components/NodesTable';
 import IndicesTable from '../components/IndicesTable';
 import ShardViewer from '../components/ShardView';
@@ -14,6 +15,7 @@ const Dashboard = () => {
 
       <ClusterOverview />
       <NodesTable />
+      <TasksTable />
       <IndicesTable />
       <ShardViewer />
     </div>
