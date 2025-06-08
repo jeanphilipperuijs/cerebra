@@ -19,10 +19,7 @@ const ShardViewer = () => {
         });
     }, []);
 
-    if (loading) return <EarWig />;
-
     const handleRelocate = async () => {
-        console.log("Relocate clicked:", selectedShard, targetNode);
         if (!selectedShard || !targetNode) return;
 
         setRelocating(true);
@@ -38,14 +35,15 @@ const ShardViewer = () => {
         }
     };
 
-    if (loading) return <div>Loading shards...</div>;
+    if (loading) return <EarWig />;
 
     return (
         <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
-            <details open={open} onToggle={() => setOpen(e.currentTarget.open)}>
+            <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
                 <summary className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Shard Viewer</h2>
                 </summary>
+
                 <div className="overflow-x-auto">
                     <table className="min-w-full text-sm border">
                         <thead className="bg-gray-100 dark:bg-gray-700">
@@ -66,8 +64,8 @@ const ShardViewer = () => {
                                         <button
                                             className="text-blue-600 hover:underline"
                                             onClick={() => {
-                                                console.log("Selected shard:", shard);
                                                 setSelectedShard(shard);
+                                                setOpen(true); // Force open details panel
                                             }}
                                         >
                                             Relocate
@@ -78,8 +76,7 @@ const ShardViewer = () => {
                         </tbody>
                     </table>
                 </div>
-                {selectedShard ? console.log("Selected shard state exists") : null}
-                {/* Inline relocate panel */}
+
                 {selectedShard && (
                     <div className="mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-xl shadow">
                         <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-100">
@@ -88,11 +85,7 @@ const ShardViewer = () => {
                         <select
                             className="p-2 rounded bg-white dark:bg-gray-800 border dark:border-gray-600 text-gray-800 dark:text-gray-100"
                             value={targetNode}
-                            onChange={(e) => {
-                                console.log("Target node:", targetNode);;
-                                setTargetNode(e.target.value)
-                            }
-                            }
+                            onChange={(e) => setTargetNode(e.target.value)}
                         >
                             <option value="">Select destination node</option>
                             {nodes
@@ -122,6 +115,5 @@ const ShardViewer = () => {
         </div>
     );
 };
-
 
 export default ShardViewer;

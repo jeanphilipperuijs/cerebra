@@ -27,7 +27,7 @@ const NodesTable = () => {
 
   return (
     <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
-      <details open={open} onToggle={() => setOpen(e.currentTarget.open)}>
+      <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
         <summary className="flex items-center justify-between cursor-pointer">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Cluster Nodes</h2>
           <button

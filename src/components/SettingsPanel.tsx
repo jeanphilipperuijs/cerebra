@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
 const SettingsPanel = () => {
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6 max-w-4xl w-full">
-      <details onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
         <summary className="flex items-center justify-between">
           <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Settings</h2>
         </summary>
