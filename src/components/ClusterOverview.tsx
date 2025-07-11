@@ -4,7 +4,7 @@ import EarWig from '../loader/earwig';
 import ElasticsearchTable from './ElasticsearchTable';
 
 const ClusterOverview = () => {
-  const [health, setHealth] = useState<any>(null);
+  const [health, setHealth] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(true);
 
   const loadHealth = async () => {
@@ -24,7 +24,6 @@ const ClusterOverview = () => {
   }, []);
 
   if (loading && !health) return <EarWig />;
-
   if (!health) return null;
 
   const headers = Object.keys(health);
@@ -56,17 +55,17 @@ const ClusterOverview = () => {
       loading={loading}
       onRefresh={loadHealth}
       refreshInterval={2000}
-      defaultOpen={false}
-      // cellRenderer={(value, key) => {
-      //   if (key === 'status') {
-      //     return (
-      //       <span className={statusColorClass(value)}>
-      //         {statusIcon(value)} {value}
-      //       </span>
-      //     );
-      //   }
-      //   return String(value ?? '-');
-      // }}
+      defaultOpen={true}
+      collapsible={true}
+      cellRenderer={(value, key) =>
+        key === 'status' ? (
+          <span className={statusColorClass(value)}>
+            {statusIcon(value)} {value}
+          </span>
+        ) : (
+          String(value ?? '-')
+        )
+      }
     />
   );
 };

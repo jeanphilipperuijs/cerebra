@@ -12,6 +12,9 @@
 	// "postCreateCommand": "yarn install",
 	// Configure tool-specific properties.
 	// "customizations": {},
+	"remoteEnv": {
+		"ELASTIC_BASE_URL": "https://es.ruijs.fr"
+	},
 	"mounts": [
 		{
 			"source": "${env:HOME}${env:USERPROFILE}/.ssh",

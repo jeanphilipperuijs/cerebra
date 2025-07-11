@@ -1,4 +1,3 @@
-// config.ts
 let config: { ELASTIC_BASE_URL?: string } = {};
 
 export const loadConfig = async () => {
@@ -6,8 +5,14 @@ export const loadConfig = async () => {
     const res = await fetch('/config/config.json');
     config = await res.json();
   } catch {
-    console.warn('Failed to load config, using fallback');
-    config = { ELASTIC_BASE_URL: 'http://es.elasticsearch:9200' }; // fallback
+    console.warn('Failed to load config.json, falling back');
+    config = { ELASTIC_BASE_URL: 'http://localhost:9200' };
+  }
+
+  // Override from localStorage if available
+  const storedUrl = localStorage.getItem('ELASTIC_BASE_URL');
+  if (storedUrl) {
+    config.ELASTIC_BASE_URL = storedUrl;
   }
 };
 

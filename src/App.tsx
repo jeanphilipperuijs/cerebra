@@ -2,9 +2,16 @@ import { useEffect, useState } from 'react';
 import Dashboard from './pages/Dashboard';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme';
+import { loadConfig } from './services/config';
 
-const App = () => {
+export const App = () => {
   const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    loadConfig().then(() => {
+      console.log('Config loaded');
+    });
+  }, []);
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -21,5 +28,3 @@ const App = () => {
     </ThemeProvider>
   );
 };
-
-export default App;

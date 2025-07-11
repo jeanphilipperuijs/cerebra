@@ -13,6 +13,7 @@ type Props = {
   onRefresh?: () => void;
   refreshInterval?: number;
   rowRenderer?: (row: any) => React.ReactNode[];
+  cellRenderer?: (value: any, key: string) => React.ReactNode;
   title?: string;
   collapsible?: boolean;
   defaultOpen?: boolean;
@@ -25,6 +26,7 @@ const ElasticsearchTable: React.FC<Props> = ({
   onRefresh,
   refreshInterval,
   rowRenderer,
+  cellRenderer,
   title = 'Elasticsearch Table',
   collapsible = false,
   defaultOpen = true,
@@ -34,7 +36,7 @@ const ElasticsearchTable: React.FC<Props> = ({
   const [orderBy, setOrderBy] = useState<string>('');
 
   useEffect(() => {
-    if (refreshInterval && onRefresh) {
+    if (open && refreshInterval && onRefresh) {
       const interval = setInterval(onRefresh, refreshInterval);
       return () => clearInterval(interval);
     }
@@ -58,14 +60,13 @@ const ElasticsearchTable: React.FC<Props> = ({
 
   const sortedRows = orderBy ? [...rows].sort(getComparator(order, orderBy)) : rows;
 
-  // Render the table content (without collapsible wrapper)
   const tableContent = (
     <Paper sx={{ p: 2, mt: 4, bgcolor: 'background.paper' }}>
       <Typography
         variant="h6"
         sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
       >
-        {title}
+        {!open && title}
         {onRefresh && (
           <Button
             onClick={onRefresh}
@@ -99,11 +100,15 @@ const ElasticsearchTable: React.FC<Props> = ({
             <TableBody>
               {sortedRows.map((row, index) => (
                 <TableRow key={index} hover>
-                  {(rowRenderer
-                    ? rowRenderer(row)
-                    : headers.map(h => (
-                      <TableCell key={h}>{String(row[h] ?? '-')}</TableCell>
-                    )))}
+                  {rowRenderer
+                    ? rowRenderer(row).map((cell, idx) => (
+                        <React.Fragment key={idx}>{cell}</React.Fragment>
+                      ))
+                    : headers.map((h) => (
+                        <TableCell key={h}>
+                          {cellRenderer ? cellRenderer(row[h], h) : String(row[h] ?? '-')}
+                        </TableCell>
+                      ))}
                 </TableRow>
               ))}
             </TableBody>
@@ -113,28 +118,15 @@ const ElasticsearchTable: React.FC<Props> = ({
     </Paper>
   );
 
-  if (!collapsible) {
-    return tableContent;
-  }
+  if (!collapsible) return tableContent;
 
   return (
     <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
       <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
         <summary className="flex items-center justify-between cursor-pointer">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
-          {/*onRefresh && (
-            <button
-              onClick={onRefresh}
-              disabled={loading}
-              className="ml-4 px-3 py-1 rounded bg-blue-600 text-white text-sm hover:bg-blue-700 disabled:opacity-50"
-            >
-              {loading ? 'Reloading...' : 'Reload'}
-            </button>
-          )*/}
         </summary>
-        <div className="overflow-x-auto mt-4">
-          {tableContent}
-        </div>
+        <div className="overflow-x-auto mt-4">{tableContent}</div>
       </details>
     </div>
   );

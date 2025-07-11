@@ -53,9 +53,9 @@ const ShardViewer = () => {
   const headers = [...baseHeaders, 'action'];
 
   return (
-    <div className="p-4">
+    <div>
       <ElasticsearchTable
-        title="Shard Viewer"
+        title="Shards"
         headers={headers}
         rows={shards.map((shard) => ({
           ...shard,
@@ -63,6 +63,8 @@ const ShardViewer = () => {
         }))}
         loading={loading}
         onRefresh={loadData}
+        collapsible={true}
+        defaultOpen={false}
         cellRenderer={(value, key) => {
           if (key === 'action' && typeof value === 'object') {
             return (
