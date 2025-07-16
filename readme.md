@@ -145,5 +145,4 @@ MIT License © Your Name
 
 Inspired by [Cerebro](https://github.com/lmenezes/cerebro).
 
-
-https://chatgpt.com/c/682a469c-9ec0-8009-a236-958d8c6d4a10
+Container images available on [docker.io](https://hub.docker.com/r/jpruijs/cerebra)
