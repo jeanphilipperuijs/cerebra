@@ -24,7 +24,7 @@ export const SettingsPanel = ({ forceOpen = false }: { forceOpen?: boolean }) =>
       {/* Dark mode toggle */}
       <div className="flex items-center space-x-4 mb-4">
         <label htmlFor="darkModeToggle" className="text-gray-700 dark:text-gray-300 font-medium">
-          Dark Mode
+          Dark mode
         </label>
         <input
           id="darkModeToggle"
