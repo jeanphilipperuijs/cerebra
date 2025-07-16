@@ -71,7 +71,7 @@ const TasksTable = () => {
       }))}
       loading={loading}
       onRefresh={loadTasks}
-      refreshInterval={2000}
+      refreshInterval={60000}
       collapsible={true}          // optional, if you want the details toggle
       defaultOpen={false}         // optional, default collapsed
     />

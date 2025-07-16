@@ -17,6 +17,7 @@ const NodesTable = () => {
       console.error("Failed to load nodes", err);
     } finally {
       setLoading(false);
+      setOpen(true)
     }
   };
 
@@ -35,7 +36,7 @@ const NodesTable = () => {
       rows={nodes}
       loading={loading}
       onRefresh={loadNodes}
-      refreshInterval={2000}
+      refreshInterval={60000}
       collapsible={true}
       defaultOpen={false}
     />

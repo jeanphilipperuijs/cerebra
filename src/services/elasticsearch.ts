@@ -9,17 +9,17 @@ export const getClusterHealth = async () => {
 };
 
 export const getNodes = async () => {
-  const response = await axios.get(`${getBaseUrl()}/_cat/nodes?format=json`);
+  const response = await axios.get(`${getBaseUrl()}/_cat/nodes?format=json&bytes=b`);
   return response.data;
 };
 
 export const getIndices = async () => {
-  const response = await axios.get(`${getBaseUrl()}/_cat/indices?format=json`);
+  const response = await axios.get(`${getBaseUrl()}/_cat/indices?format=json&bytes=b`);
   return response.data;
 };
 
 export const getShards = async () => {
-  const response = await axios.get(`${getBaseUrl()}/_cat/shards?format=json`);
+  const response = await axios.get(`${getBaseUrl()}/_cat/shards?format=json&bytes=b`);
   return response.data;
 };
 

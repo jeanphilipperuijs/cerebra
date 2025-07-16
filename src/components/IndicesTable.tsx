@@ -17,7 +17,9 @@ const IndicesTable = () => {
       console.error('Failed to load indices', err);
     } finally {
       setLoading(false);
+      setOpen(true)
     }
+    
   };
 
   useEffect(() => {
@@ -34,8 +36,8 @@ const IndicesTable = () => {
       headers={headers}
       rows={indices}
       loading={loading}
-      refreshInterval={10000}
-      cellRenderer={(value) => (value === 'green' ? <>💚 {value}</> : String(value ?? '-'))}
+      refreshInterval={60000}
+      cellRenderer={(value) => (value === 'green' ? <>{value} 💚</> : String(value ?? '-'))}
       onRefresh={loadIndices}
       collapsible={true}
       defaultOpen={false}

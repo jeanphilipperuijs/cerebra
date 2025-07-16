@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme';
 import { loadConfig } from './services/config';
+import SettingsDrawer from './components/SettingsDrawer';
 
 export const App = () => {
   const [isDark, setIsDark] = useState(false);
@@ -24,6 +25,7 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <SettingsDrawer />
       <Dashboard />
     </ThemeProvider>
   );

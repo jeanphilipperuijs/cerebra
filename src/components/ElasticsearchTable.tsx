@@ -50,34 +50,35 @@ const ElasticsearchTable: React.FC<Props> = ({
 
   const getComparator = (order: Order, orderBy: string) => {
     return (a: any, b: any) => {
-      const aVal = a[orderBy] ?? '';
-      const bVal = b[orderBy] ?? '';
+      const aVal = a[orderBy];
+      const bVal = b[orderBy];
+
+      const isNumber = (val: any) => !isNaN(parseFloat(val)) && isFinite(val);
+
+      if (isNumber(aVal) && isNumber(bVal)) {
+        return order === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+
+      const aStr = aVal?.toString() ?? '';
+      const bStr = bVal?.toString() ?? '';
+
       return order === 'asc'
-        ? String(aVal).localeCompare(String(bVal))
-        : String(bVal).localeCompare(String(aVal));
+        ? aStr.localeCompare(bStr)
+        : bStr.localeCompare(aStr);
     };
   };
 
   const sortedRows = orderBy ? [...rows].sort(getComparator(order, orderBy)) : rows;
 
   const tableContent = (
-    <Paper sx={{ p: 2, mt: 4, bgcolor: 'background.paper' }}>
-      <Typography
+    <Paper sx={{ p: 1, mt: 1, bgcolor: 'background.paper' }}>
+      {/* <Typography
         variant="h6"
-        sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+        sx={{ mb: 2, display: 'right', justifyContent: 'space-between', alignItems: 'center' }}
       >
         {!open && title}
-        {onRefresh && (
-          <Button
-            onClick={onRefresh}
-            disabled={loading}
-            variant="contained"
-            size="small"
-          >
-            {loading ? 'Reloading...' : 'Reload'}
-          </Button>
-        )}
-      </Typography>
+
+      </Typography> */}
 
       <Collapse in={open}>
         <TableContainer>
@@ -102,13 +103,13 @@ const ElasticsearchTable: React.FC<Props> = ({
                 <TableRow key={index} hover>
                   {rowRenderer
                     ? rowRenderer(row).map((cell, idx) => (
-                        <React.Fragment key={idx}>{cell}</React.Fragment>
-                      ))
+                      <React.Fragment key={idx}>{cell}</React.Fragment>
+                    ))
                     : headers.map((h) => (
-                        <TableCell key={h}>
-                          {cellRenderer ? cellRenderer(row[h], h) : String(row[h] ?? '-')}
-                        </TableCell>
-                      ))}
+                      <TableCell key={h}>
+                        {cellRenderer ? cellRenderer(row[h], h) : String(row[h] ?? '-')}
+                      </TableCell>
+                    ))}
                 </TableRow>
               ))}
             </TableBody>
@@ -121,12 +122,30 @@ const ElasticsearchTable: React.FC<Props> = ({
   if (!collapsible) return tableContent;
 
   return (
+    // <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
+    //   <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+    //     <summary className="flex items-center justify-between cursor-pointer">
+    //       <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+    //     </summary>
+    //     <div className="overflow-x-auto mt-4">{tableContent}</div>
+    //   </details>
+    // </div>
     <div className="p-4 bg-white dark:bg-gray-800 shadow rounded-xl mt-6">
       <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
         <summary className="flex items-center justify-between cursor-pointer">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+          {onRefresh && (
+            <Button
+              onClick={onRefresh}
+              disabled={loading}
+              variant="contained"
+              size="small"
+            >
+              {loading ? 'Reloading...' : 'Reload'}
+            </Button>
+          )}
         </summary>
-        <div className="overflow-x-auto mt-4">{tableContent}</div>
+        <div>{tableContent}</div>
       </details>
     </div>
   );

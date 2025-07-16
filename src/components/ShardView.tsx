@@ -11,6 +11,8 @@ const ShardViewer = () => {
   const [selectedShard, setSelectedShard] = useState<any | null>(null);
   const [targetNode, setTargetNode] = useState('');
   const [relocating, setRelocating] = useState(false);
+  const [open, setOpen] = useState(false);
+
 
   const loadData = async () => {
     setLoading(true);
@@ -22,6 +24,7 @@ const ShardViewer = () => {
       console.error('Failed to load shard/node data', err);
     } finally {
       setLoading(false);
+      setOpen(true)
     }
   };
 

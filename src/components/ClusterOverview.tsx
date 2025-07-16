@@ -6,6 +6,7 @@ import ElasticsearchTable from './ElasticsearchTable';
 const ClusterOverview = () => {
   const [health, setHealth] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const loadHealth = async () => {
     setLoading(true);
@@ -16,6 +17,7 @@ const ClusterOverview = () => {
       console.error('Failed to load cluster health', err);
     } finally {
       setLoading(false);
+      setOpen(true)
     }
   };
 
@@ -54,8 +56,8 @@ const ClusterOverview = () => {
       rows={rows}
       loading={loading}
       onRefresh={loadHealth}
-      refreshInterval={2000}
-      defaultOpen={true}
+      refreshInterval={60000}
+      defaultOpen={open}
       collapsible={true}
       cellRenderer={(value, key) =>
         key === 'status' ? (
