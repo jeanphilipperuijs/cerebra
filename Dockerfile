@@ -1,5 +1,5 @@
-FROM nginx:alpine
-
+FROM nginxinc/nginx-unprivileged:stable-alpine
+USER root
 # Create a non-root user
 RUN adduser -D -g '' nginxuser
 
