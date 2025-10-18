@@ -12,6 +12,26 @@ RUN npm run build
 
 
 FROM nginxinc/nginx-unprivileged:stable-alpine
+
+# --------------------------
+# Metadata labels (OCI standard)
+# --------------------------
+LABEL org.opencontainers.image.authors="Jean-Philippe Ruijs <jean-philippe@ruijs.fr>" \
+      org.opencontainers.image.title="Cerebra" \
+      org.opencontainers.image.description="Elastic Monitoring and Managing" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.url="https://cerebr.amapz.com" \
+      org.opencontainers.image.source="https://github.com/jeanphilipperuijs/cerebra.git" \
+      org.opencontainers.image.vendor="AmapZ" 
+      #\
+      #org.opencontainers.image.revision="git-sha-or-other-id" \
+      #org.opencontainers.image.created="2025-10-18T12:00:00Z"
+
+# --------------------------
+# Build steps
+# --------------------------
+
 USER root
 # Create a non-root user
 RUN adduser -D -g '' nginxuser
