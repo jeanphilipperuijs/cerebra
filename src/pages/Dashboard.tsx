@@ -3,6 +3,7 @@ import TasksTable from '../components/TasksTable';
 import NodesTable from '../components/NodesTable';
 import IndicesTable from '../components/IndicesTable';
 import ShardViewer from '../components/ShardView';
+import IndicesActivityTable from '../components/IndicesActivityTable';
 
 const Dashboard = () => {
 
@@ -14,7 +15,9 @@ const Dashboard = () => {
       <TasksTable />
       <IndicesTable />
       <ShardViewer />
+<IndicesActivityTable />
     </div>
   );
 };
 export default Dashboard;
+
